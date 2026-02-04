@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gold Price Calculator</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-image: url("goldi2.avif");
+      background-size: cover;
+      background-position: center;
+      margin:10px;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      max-width: 700px;
+      width: 100%;
+      border: 2px solid silver;
+      border-radius: 15px;
+      height:420px;
+      padding-top: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-evenly;
+      margin: 10px 0;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .row-content{
+      align-items: center;
+    }
+
+    label {
+      width: 150px;
+    }
+
+    input[type="number"] {
+      width: 120px;
+      padding: 6px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+    }
+
+    .result-box {
+      font-weight: bold;
+      border: 1px solid #aaa;
+      padding: 6px;
+      width: 120px;
+      background-color: #f9f9f9;
+      text-align: center;
+      border-radius: 5px;
+    }
+
+    .total-row {
+      margin-top: 30px;
+      text-align: right;
+      margin-right: 30px;
+    }
+
+    .total-row span {
+      font-size: 18px;
+      font-weight: bold;
+      padding: 10px;
+      border: 2px solid #aaa;
+      border-radius: 5px;
+      background-color: #e8fbe9;
+      color: #2b6e33;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 15px;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Gold Price Calculator</h2>
+
+    <div class="row">
+      <div class="row-content">
+        <label for="goldRate">Gold rate:</label>
+        <input type="number" id="goldRate"></div>
+    </div>
+
+    <div class="row">
+      <label for="goldWt">Gold weight (grams):</label>
+      <input type="number" id="goldWt">     
+      <label>Gold price:</label>
+      <div class="result-box" id="goldPriceAmount">0</div>
+    </div>
+
+    <div class="row">
+      <label for="makingCharge">Making charge (%):</label>
+      <input type="number" id="makingCharge">
+      <label>Making charge amount:</label>
+      <div class="result-box" id="makingChargeAmount">0</div>
+    </div>
+
+    <div class="row">
+      <label for="wastage">Wastage (%):</label>
+      <input type="number" id="wastage">
+      <label>Wastage amount:</label>
+      <div class="result-box" id="wastageAmount">0</div>
+    </div>
+
+   <div class="row">
+  <label for="tax">Tax (%):</label>
+  <input type="number" id="tax"><label>Tax amount:</label>
+  <div class="result-box" id="taxAmount">0</div>
+</div>
+
+    <div class="total-row">
+      Total price:
+      <span id="totalPrice">0</span>
+    </div>
+
+    <button onclick="calculate()">Calculate</button>
+    <button onclick="clearFields()">Clear</button>
+
+  </div>
+
+  <script>
+    function calculate() {
+      const goldRate = parseFloat(document.getElementById("goldRate").value) || 0;
+      const goldWt = parseFloat(document.getElementById("goldWt").value) || 0;
+      const makingChargePercent = parseFloat(document.getElementById("makingCharge").value) || 0;
+      const wastagePercent = parseFloat(document.getElementById("wastage").value) || 0;
+      const taxPercent = parseFloat(document.getElementById("tax").value) || 0;
+
+      const goldPriceAmount = goldRate * goldWt;
+      const makingChargeAmount = goldPriceAmount * (makingChargePercent / 100);
+      const wastageAmount = goldPriceAmount * (wastagePercent / 100);
+      const taxAmount = (goldPriceAmount + makingChargeAmount + wastageAmount) * (taxPercent / 100);
+      const totalPrice = goldPriceAmount + makingChargeAmount + wastageAmount + taxAmount;
+
+      document.getElementById("goldPriceAmount").innerText = goldPriceAmount.toFixed(2);
+      document.getElementById("makingChargeAmount").innerText = makingChargeAmount.toFixed(2);
+      document.getElementById("wastageAmount").innerText = wastageAmount.toFixed(2);
+      document.getElementById("taxAmount").innerText = taxAmount.toFixed(2);
+      document.getElementById("totalPrice").innerText = totalPrice.toFixed(2);
+    }
+
+    function clearFields() {
+      document.getElementById("goldRate").value = "";
+      document.getElementById("goldWt").value = "";
+      document.getElementById("makingCharge").value = "";
+      document.getElementById("wastage").value = "";
+      document.getElementById("tax").value = "";
+
+      document.getElementById("goldPriceAmount").innerText = "0";
+      document.getElementById("makingChargeAmount").innerText = "0";
+      document.getElementById("wastageAmount").innerText = "0";
+      document.getElementById("taxAmount").innerText = "0";
+      document.getElementById("totalPrice").innerText = "0";
+    }
+
+  </script>
+
+</body>
+</html>
